@@ -39,4 +39,6 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
   providers: [],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
