@@ -36,11 +36,9 @@ app.use((req: any, res: any, next: any) => {
     next();
 });
 
-// Middleware for login
+// Setup middleware for password
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
-app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
 
 passport.use(new LocalStrategy(
     function(username: string, password: string, done: any) {
@@ -62,6 +60,9 @@ passport.use(new LocalStrategy(
             });
     }
 ));
+
+// Setup login endpoint
+app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
 
 // Initialize database, and open server listener
 app.listen(API_PORT, function () {
