@@ -40,6 +40,9 @@ app.use('/tags', tagsController);
 const registerController = require('./controllers/register.controller');
 app.use('/register', registerController);
 
+const foodController = require('./controllers/food.controller');
+app.use('/food', foodController);
+
 // Setup middleware for password
 app.use(express.static('public'));
 app.use(cookieParser());

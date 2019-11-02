@@ -1,7 +1,3 @@
-export class FoodTag {
+export interface FoodTag {
     name: string;
-
-    constructor(name: string) {
-        this.name = name;
-    }
 }
