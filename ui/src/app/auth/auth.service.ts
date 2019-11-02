@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import {HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private authenticated = false;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   public isAuthenticated(): boolean {
-    return true;
+    return this.authenticated;
   }
 
-  public authenticate() {
-    // TODO
+  public authenticate(username: string, password: string) {
+    this.authenticated = true;
+  }
+
+  public createUser(username: string, password: string) {
+    
   }
 }
