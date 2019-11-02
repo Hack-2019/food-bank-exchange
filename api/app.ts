@@ -36,6 +36,33 @@ app.use((req: any, res: any, next: any) => {
     next();
 });
 
+// Middleware for login
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
+
+passport.use(new LocalStrategy(
+    function(username: string, password: string, done: any) {
+        console.log(username);
+
+        firestore.collection('users')
+            .where("username", "==", username)
+            .get()
+            .then(result => {
+                if (result.size != 1) {
+                    done(null, false, { message: "multiple users with the same username" });
+                }
+
+                if (result.docs[0].get("password") == password) {
+                    done(null, result.docs[0].data())
+                }
+
+                done(null, false, { message: "incorrect password" });
+            });
+    }
+));
+
 // Initialize database, and open server listener
 app.listen(API_PORT, function () {
     console.log(`API web service started on port ${API_PORT}.`);
