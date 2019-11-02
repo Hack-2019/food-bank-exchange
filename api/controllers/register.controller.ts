@@ -4,7 +4,7 @@ export {};
 const express = require('express');
 const router = express.Router();
 
-router.get('', ((req: any, res: any, next: any) => {
+router.post('', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
 
     firestore.collection('users').add(req.body).then((ref: any) => {
@@ -17,3 +17,5 @@ router.get('', ((req: any, res: any, next: any) => {
         next();
     });
 }));
+
+module.exports = router;

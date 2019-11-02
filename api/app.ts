@@ -34,6 +34,9 @@ app.use((req: any, res: any, next: any) => {
 const foodbanksController = require('./controllers/foodbank.controller');
 app.use('/foodbanks', foodbanksController);
 
+const registerController = require('./controllers/register.controller');
+app.use('/register', registerController);
+
 // Setup middleware for password
 app.use(express.static('public'));
 app.use(cookieParser());
