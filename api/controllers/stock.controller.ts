@@ -3,8 +3,9 @@ const express = require('express');
 const router = express.Router();
 import {FirebaseFirestore} from "@firebase/firestore-types";
 import {Stock} from "../../core/models/store";
+import {Donation} from "../../core/models/donation";
 
-router.post('/list', ((req: any, res: any, next: any) => {
+router.get('/list', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
 
     if (req.user) {
@@ -27,6 +28,18 @@ router.post('/list', ((req: any, res: any, next: any) => {
     } else {
         res.sendStatus(403);
     }
+}));
+
+router.post('/donate', ((req: any, res: any, next: any) => {
+    const firestore: FirebaseFirestore = req.firestore;
+
+    firestore.collection("stock")
+        .where("username", "==", req.user.username)
+        .limit(1)
+        .get()
+        .then(result => {
+            result.docs[0].get
+        });
 }));
 
 module.exports = router;

@@ -17,7 +17,7 @@ router.post('', ((req: any, res: any, next: any) => {
            } else {
                firestore.collection('users').add(req.body).then((ref: any) => {
                    if (ref) {
-                       res.sendStatus(201);
+                       res.status(201).send({username: req.body.username});
                    } else {
                        res.sendStatus(500);
                    }
