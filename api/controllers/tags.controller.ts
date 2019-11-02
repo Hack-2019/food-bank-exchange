@@ -27,7 +27,7 @@ router.get('/list', ((req: any, res: any, next: any) => {
         .limit(1000)
         .get()
         .then(result => {
-            res.status(200).send(result.docs.map(doc => new FoodTag(doc.get("name"))))
+            res.status(200).send(result.docs.map(doc => <FoodTag>{name: doc.get("name")}))
         });
 }));
 
