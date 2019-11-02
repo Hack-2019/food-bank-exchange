@@ -6,23 +6,28 @@ const router = express.Router();
 
 router.get('/add', (((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
-    //firestore.collection()
+    firestore.collection('tags')
+        .add(req.body)
+        .then(ref => {
+                if (ref) {
+                    res.status(200).send(ref);
+                } else {
+                    res.sendStatus(500);
+                }
+
+                next();
+            }
+        );
 })));
 
 router.get('/list', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
     firestore.collection('tags')
-        .add(req.body)
-        .then(ref => {
-            if (ref) {
-                res.status(201).send(ref);
-            } else {
-                res.sendStatus(500);
-            }
-
-            next();
-        }
-    );
+        .limit(1000)
+        .get()
+        .then(result => {
+            res.status(200).send()
+        });
 }));
 
 module.exports = router;
