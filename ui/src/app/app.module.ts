@@ -13,6 +13,7 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
 
     TagInputModule,
     BrowserAnimationsModule,
