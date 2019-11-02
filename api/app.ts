@@ -1,6 +1,7 @@
 import express = require('express');
 import {FirebaseFirestore} from "@firebase/firestore-types";
 const { Firestore } = require("@google-cloud/firestore");
+import { LoginResult } from "../core/models/authentication/login.result"
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -43,8 +44,6 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy(
     function(username: string, password: string, done: any) {
-        console.log(username);
-
         firestore.collection('users')
             .where("username", "==", username)
             .get()
@@ -63,15 +62,14 @@ passport.use(new LocalStrategy(
 ));
 
 app.post('/login', (req: any, res: any, next: any) => {
-    console.log("it is called");
     passport.authenticate("local", function(err: any, user: any, info: any) {
-        console.log("test");
         if (!user || err) {
             res.sendStatus(403);
         } else {
             req.login(user, (err: any) => {
                 if (!err) {
-                    res.sendStatus(200);
+                    let response: LoginResult = new LoginResult(user.username);
+                    res.status(200).send(response);
                 }
             });
         }

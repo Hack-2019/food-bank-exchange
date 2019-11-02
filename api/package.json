@@ -2,10 +2,10 @@
   "name": "FoodBankExchangeAPI",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "dist/api/app.js",
   "scripts": {
     "start": "node dist/app.js",
-    "start:watch": "nodemon dist/app.js",
+    "start:watch": "nodemon dist/api/app.js",
     "build": "rimraf ./dist && tsc",
     "build:watch": "tsc --watch",
     "serve-dev": "concurrently --kill0others \"npm run build:watch\" \"npm run start:watch\"",
