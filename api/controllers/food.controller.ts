@@ -1,5 +1,4 @@
 import {FirebaseFirestore} from "@firebase/firestore-types";
-import {Food} from '../../core/models/food';
 import {FoodTag} from '../../core/models/food.tag';
 
 export {};

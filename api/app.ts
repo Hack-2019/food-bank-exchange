@@ -43,6 +43,9 @@ app.use('/register', registerController);
 const foodController = require('./controllers/food.controller');
 app.use('/food', foodController);
 
+const stockController = require('./controllers/stock.controller');
+app.use('/stock', stockController)
+
 // Setup middleware for password
 app.use(express.static('public'));
 app.use(cookieParser());

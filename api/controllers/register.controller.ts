@@ -12,7 +12,7 @@ router.post('', ((req: any, res: any, next: any) => {
         .get()
         .then(result => {
            if (result.size != 0) {
-               res.status(403).send("Username already exists");
+               res.status(403).send({message: "Username already exists"});
            } else {
                firestore.collection('users').add(req.body).then((ref: any) => {
                    if (ref) {
