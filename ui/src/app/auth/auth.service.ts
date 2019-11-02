@@ -46,6 +46,11 @@ export class AuthService {
     return this.authenticated;
   }
 
+  public logout() {
+    this.authenticated = null;
+    this.authChangeEmitter.emit();
+  }
+
   public createUser(username: string, password: string) {
 
   }

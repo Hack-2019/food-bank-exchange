@@ -29,4 +29,8 @@ export class LoginPageComponent implements OnInit {
       this.incorrect = true;
     }
   }
+
+  logout() {;
+    this.auth.logout();
+  }
 }
