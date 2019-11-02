@@ -1,0 +1,33 @@
+{
+  "name": "FoodBankExchangeAPI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "start:watch": "nodemon dist/app.js",
+    "build": "rimraf ./dist && tsc",
+    "build:watch": "tsc --watch",
+    "serve-dev": "concurrently --kill0others \"npm run build:watch\" \"npm run start:watch\"",
+    "test": "echo Not implemented.",
+    "lint": "echo Not implemented.",
+    "e2e": "echo Not implemented."
+  },
+  "private": true,
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.3",
+    "password-hash": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/mongodb": "^3.3.3",
+    "@types/node": "~8.9.4",
+    "nodemon": "^1.19.4",
+    "rimraf": "^3.0.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.5.3"
+  }
+}
