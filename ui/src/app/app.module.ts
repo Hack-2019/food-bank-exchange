@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CheckoutPageComponent,
     SummaryPageComponent,
     DonationTypeComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,

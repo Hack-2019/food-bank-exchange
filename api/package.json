@@ -15,7 +15,7 @@
   },
   "private": true,
   "dependencies": {
-    "@firebase/firestore-types": "^1.6.2",
+    "firebase": "^7.2.3",
     "@google-cloud/firestore": "^2.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
