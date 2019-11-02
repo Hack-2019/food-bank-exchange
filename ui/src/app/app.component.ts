@@ -22,4 +22,8 @@ export class AppComponent implements OnInit {
       this.authenticatedUser = this.auth.getAuthenticatedUser();
     });
   }
+
+  logout() {
+    this.auth.logout();
+  }
 }
