@@ -11,6 +11,7 @@ export class LoginPageComponent implements OnInit {
 
   username: string;
   password: string;
+  incorrect = false;
 
   constructor(private auth: AuthService, private router: Router) { }
 
@@ -20,8 +21,12 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    this.auth.authenticate(this.username, this.password);
-    this.router.navigate(['summary']);
+  async onSubmit() {
+    const success = await this.auth.authenticate(this.username, this.password );
+    if (success) {
+      this.router.navigate(['summary']);
+    } else {
+      this.incorrect = true;
+    }
   }
 }
