@@ -11,13 +11,24 @@ export class RegisterPageComponent implements OnInit {
   username: string;
   password: string;
 
+  already = false;
+  err = false;
+
   constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  onSubmit() {
-    this.auth.createUser(this.username, this.password);
-    this.router.navigate(['']);
+  async onSubmit() {
+    const resp = await this.auth.createUser(this.username, this.password);
+    console.log(resp);
+    
+    if (resp === 'Created') {
+      this.router.navigate(['']);
+    } else if (resp === 'Username already exists') {
+      this.already = true;
+    } else {
+      this.err = true;
+    }
   }
 }
