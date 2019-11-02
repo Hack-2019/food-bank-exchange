@@ -34,6 +34,9 @@ app.use((req: any, res: any, next: any) => {
 const foodbanksController = require('./controllers/foodbank.controller');
 app.use('/foodbanks', foodbanksController);
 
+const tagsController = require('./controllers/tags.controller');
+app.use('/tags', tagsController);
+
 const registerController = require('./controllers/register.controller');
 app.use('/register', registerController);
 
