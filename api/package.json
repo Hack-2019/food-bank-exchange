@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/api/app.js",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node dist/api/app.js",
     "start:watch": "nodemon dist/api/app.js",
     "build": "rimraf ./dist && tsc",
     "build:watch": "tsc --watch",
