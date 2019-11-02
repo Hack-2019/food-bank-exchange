@@ -9,9 +9,6 @@ import { FormsModule }   from '@angular/forms';
 export class DonationTypeComponent implements OnInit {
 
   public items = [
-    {display: 'Pizza', value: 1},
-    {display: 'Pasta', value: 2},
-    {display: 'Parmesan', value: 3},
   ];
   constructor() { }
 
