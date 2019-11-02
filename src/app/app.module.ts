@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { AddDonationPageComponent } from './add-donation-page/add-donation-page.component';
 import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
 import { SummaryPageComponent } from './summary-page/summary-page.component';
+import { DonationTypeComponent } from './donation-type-page/donation-type-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddDonationPageComponent,
     CheckoutPageComponent,
-    SummaryPageComponent
+    SummaryPageComponent,
+    DonationTypeComponent
   ],
   imports: [
     BrowserModule,
