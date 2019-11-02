@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Add Donation Type Form</h1>
+  <form #nameform="ngForm">
+    <div class="form-group">
+      <label for="name">Name: </label>
+      <input type="text" name="name" class="form-control" required minlength="1" [(ngModel)]="Donation"
+        #name="ngModel">
+      <div style="color:red;" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+        <div *ngIf="name.errors.required">
+          Donation name is required.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Input a donation name.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!nameform.form.valid" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+<div class="force-to-the-bottom">
+  <tag-input [ngModel]="['hardocoded-item']">
+    <tag-input-dropdown
+      [autocompleteItems]="items"
+      [showDropdownIfEmpty]="true"
+      [dynamicUpdate]="false"
+    >
+    </tag-input-dropdown>
+  </tag-input>
+</div>
