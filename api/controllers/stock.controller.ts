@@ -7,7 +7,7 @@ import {Stock} from "../../core/models/store";
 router.post('/list', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
 
-    if (true) {
+    if (req.user) {
         firestore.collection('stock')
             .where("username", "==", 'test')
             .limit(1)
