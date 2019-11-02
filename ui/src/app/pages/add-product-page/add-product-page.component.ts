@@ -1,5 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { FoodTag } from "../../../../../core/models/food.tag";
 
 @Component({
   selector: 'app-donation-type',
@@ -8,11 +10,16 @@ import { FormsModule }   from '@angular/forms';
 })
 export class AddProductComponent implements OnInit {
 
-  public items = [
-  ];
-  constructor() { }
+
+  foodTags: string[];
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
+    this.httpClient.get<FoodTag[]>('http://localhost:8080/tags/list')
+    .subscribe(results => {
+      console.log(results);
+      this.foodTags = results.map(result => result.name);
+    });
   }
 
 }
