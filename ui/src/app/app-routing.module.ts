@@ -7,10 +7,11 @@ import { DonationTypeComponent } from './pages/donation-type-page/donation-type-
 
 
 const routes: Routes = [
-  { path: '', component: SummaryPageComponent },
+  { path: 'summary', component: SummaryPageComponent },
   { path: 'add-donation', component: AddDonationPageComponent },
   { path: 'checkout', component: CheckoutPageComponent},
-  { path: 'add-donation-type', component: DonationTypeComponent}
+  { path: 'add-donation-type', component: DonationTypeComponent},
+  
 ];
 
 @NgModule({
