@@ -1,8 +1,8 @@
-export class Donation {
+export interface Donation {
     items: DonationItem[];
 }
 
-export class DonationItem {
-    productId: string;
-    quantity: Number;
+export interface DonationItem {
+    foodName: string;
+    quantity: number;
 }

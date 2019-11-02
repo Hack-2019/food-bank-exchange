@@ -2,8 +2,8 @@ export {};
 const express = require('express');
 const router = express.Router();
 import {FirebaseFirestore} from "@firebase/firestore-types";
-import {Stock} from "../../core/models/store";
-import {Donation} from "../../core/models/donation";
+import {Stock, StockItem} from "../../core/models/store";
+import {Donation, DonationItem} from "../../core/models/donation";
 
 router.get('/list', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
@@ -38,7 +38,17 @@ router.post('/donate', ((req: any, res: any, next: any) => {
         .limit(1)
         .get()
         .then(result => {
-            result.docs[0].get
+            let stock: Stock = result.docs[0].get("foods");
+
+            req.items.forEach((donated: DonationItem) => {
+                stock.foods.forEach((existing: StockItem) => {
+                    if (donated.foodName === existing.name) {
+                        existing.quantity += donated.quantity;
+                    }
+                });
+            });
+
+            firestore.doc(result.docs[0].id).update("foods", stock);
         });
 }));
 
