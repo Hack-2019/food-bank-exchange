@@ -7,6 +7,7 @@ import { AddDonationPageComponent } from './add-donation-page/add-donation-page.
 import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
 import { SummaryPageComponent } from './summary-page/summary-page.component';
 import { DonationTypeComponent } from './donation-type-page/donation-type-page.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,11 +15,12 @@ import { DonationTypeComponent } from './donation-type-page/donation-type-page.c
     AddDonationPageComponent,
     CheckoutPageComponent,
     SummaryPageComponent,
-    DonationTypeComponent
+    DonationTypeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
