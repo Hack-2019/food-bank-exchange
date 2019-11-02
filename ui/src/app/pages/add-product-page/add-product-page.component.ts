@@ -3,10 +3,10 @@ import { FormsModule }   from '@angular/forms';
 
 @Component({
   selector: 'app-donation-type',
-  templateUrl: './donation-type-page.component.html',
-  styleUrls: ['./donation-type-page.component.css']
+  templateUrl: './add-product-page.component.html',
+  styleUrls: ['./add-product-page.component.css']
 })
-export class DonationTypeComponent implements OnInit {
+export class AddProductComponent implements OnInit {
 
   public items = [
   ];

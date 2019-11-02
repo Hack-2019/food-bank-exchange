@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AddDonationPageComponent } from './pages/add-donation-page/add-donation-page.component';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
-import { DonationTypeComponent } from './pages/donation-type-page/donation-type-page.component';
+import { AddProductComponent } from './pages/add-product-page/add-product-page.component';
 import { FormsModule } from '@angular/forms';
 
 import { TagInputModule } from 'ngx-chips';
@@ -22,7 +22,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
     AddDonationPageComponent,
     CheckoutPageComponent,
     SummaryPageComponent,
-    DonationTypeComponent,
+    AddProductComponent,
     LoginPageComponent,
     RegisterPageComponent,
   ],

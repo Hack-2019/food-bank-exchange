@@ -9,6 +9,12 @@ import { Component, OnInit } from '@angular/core';
 
 export class CheckoutPageComponent implements OnInit {
 
+   contestForm ={
+    value: {
+        name: "Apple",
+        category: "Fruit"
+    }
+};
   constructor() { }
 
   ngOnInit() {
