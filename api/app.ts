@@ -39,6 +39,16 @@ app.use((req: any, res: any, next: any) => {
 // Setup middleware for password
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+
+app.use(express.static('public'));
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(new LocalStrategy(
     function(username: string, password: string, done: any) {
@@ -53,13 +63,21 @@ passport.use(new LocalStrategy(
                 }
 
                 if (result.docs[0].get("password") == password) {
-                    done(null, result.docs[0].data())
+                    done(null, {username: result.docs[0].get('username')});
+                } else {
+                    done(null, false, { message: "incorrect password" });
                 }
-
-                done(null, false, { message: "incorrect password" });
             });
     }
 ));
+
+passport.serializeUser((user: any, done: any) => {
+    done(null, user);
+});
+
+passport.deserializeUser((user: any, done: any) => {
+    done(null, user);
+});
 
 // Setup login endpoint
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
