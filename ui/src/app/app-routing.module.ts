@@ -6,6 +6,7 @@ import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.compo
 import { DonationTypeComponent } from './pages/donation-type-page/donation-type-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'add-donation', component: AddDonationPageComponent, canActivate: [AuthGuardService] },
   { path: 'checkout', component: CheckoutPageComponent, canActivate: [AuthGuardService] },
   { path: 'add-donation-type', component: DonationTypeComponent, canActivate: [AuthGuardService] },
+  { path: 'register', component: RegisterPageComponent },
   { path: '', component: LoginPageComponent },
   { path: '**', redirectTo: '' }
 ];
