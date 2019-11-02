@@ -10,8 +10,18 @@ import { FoodTag } from "../../../../../core/models/food.tag";
 })
 export class AddProductComponent implements OnInit {
 
-
   foodTags: string[];
+  foodname: string;
+  onSubmit(somethingElse,somethingElse2)
+  {
+    this.httpClient.post('http://localhost:8080/food/add',
+    {
+      name : somethingElse,
+      tags : somethingElse2.map(el=> el.value)
+    }).subscribe(results => {
+      console.log(results);
+    });
+  }
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
