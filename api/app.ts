@@ -2,6 +2,11 @@ import express = require('express');
 import {FirebaseFirestore} from "@firebase/firestore-types";
 const { Firestore } = require("@google-cloud/firestore");
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 const cors = require("cors");
 const API_PORT = 8080;
 
@@ -28,25 +33,11 @@ app.use((req: any, res: any, next: any) => {
 const foodbanksController = require('./controllers/foodbank.controller');
 app.use('/foodbanks', foodbanksController);
 
-// Middleware for request debug of timing
-app.use((req: any, res: any, next: any) => {
-    const secondsToProcess = (new Date().getTime() - req.startedAt.getTime()) / 1000;
-    console.log(`Request completed with code ${res.statusCode} in ${secondsToProcess} seconds.`);
-    console.groupEnd();
-    next();
-});
-
 // Setup middleware for password
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({ secret: 'nothing in the world'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -59,17 +50,33 @@ passport.use(new LocalStrategy(
             .get()
             .then(result => {
                 if (result.size != 1) {
-                    done(null, false, { message: "multiple users with the same username" });
+                    return done(null, false, { message: "multiple users with the same username" });
                 }
 
                 if (result.docs[0].get("password") == password) {
-                    done(null, {username: result.docs[0].get('username')});
+                    return done(null, result.docs[0].data());
                 } else {
-                    done(null, false, { message: "incorrect password" });
+                    return done(null, false, { message: "incorrect password" });
                 }
             });
     }
 ));
+
+app.post('/login', (req: any, res: any, next: any) => {
+    console.log("it is called");
+    passport.authenticate("local", function(err: any, user: any, info: any) {
+        console.log("test");
+        if (!user || err) {
+            res.sendStatus(403);
+        } else {
+            req.login(user, (err: any) => {
+                if (!err) {
+                    res.sendStatus(200);
+                }
+            });
+        }
+    })(req, res, next);
+});
 
 passport.serializeUser((user: any, done: any) => {
     done(null, user);
@@ -78,9 +85,6 @@ passport.serializeUser((user: any, done: any) => {
 passport.deserializeUser((user: any, done: any) => {
     done(null, user);
 });
-
-// Setup login endpoint
-app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
 
 // Initialize database, and open server listener
 app.listen(API_PORT, function () {
