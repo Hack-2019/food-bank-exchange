@@ -12,8 +12,4 @@ export class AuthService {
   public isAuthenticated(): boolean {
     return true;
   }
-
-  public authenticate() {
-    this.http.get(`http://${environment.server}/login/redirect`).subscribe((result) => console.log(result));
-  }
 }
