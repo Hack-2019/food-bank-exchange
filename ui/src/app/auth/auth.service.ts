@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
@@ -7,6 +7,9 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 })
 export class AuthService {
   private authenticated = null;
+
+  private authChangeEmitter = new EventEmitter();
+  public authChange = this.authChangeEmitter.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -27,10 +30,9 @@ export class AuthService {
       this.http.post(`http://${environment.server}/login`, JSON.stringify(body), this.httpOptions).subscribe((resp) => {
         if ((resp as Response).username) {
           this.authenticated = (resp as Response).username;
-          console.log('false');
           resolve(true);
+          this.authChangeEmitter.emit();
         } else {
-          console.log('false');
           resolve(false);
         }
       },

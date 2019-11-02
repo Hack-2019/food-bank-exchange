@@ -19,6 +19,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/add-product" routerActive="active">Add Product</a>
         </li>
+        <li *ngIf="authenticated" class="nav-item">
+          <a class="nav-link"><img src="https://img.icons8.com/material-sharp/24/000000/user.png">{{authenticatedUser}}</a>
+        </li>
       </ul>
     </div>
   </div>
