@@ -1,3 +1,6 @@
 node_modules
 dist
 .idea
+
+# Don't commit the user's api key
+gcloud-credentials.json
