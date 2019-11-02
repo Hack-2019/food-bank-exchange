@@ -1,10 +1,11 @@
 import express = require('express');
+import {FirebaseFirestore} from "@firebase/firestore-types";
 const { Firestore } = require("@google-cloud/firestore");
 
 const cors = require("cors");
 const API_PORT = 8080;
 
-const firestore = new Firestore({projectId: "foodbankexchange", keyFilename: 'gcloud-credentials.json'});
+const firestore: FirebaseFirestore = new Firestore({projectId: "foodbankexchange", keyFilename: 'gcloud-credentials.json'});
 
 // Create a new express application instance
 const app: express.Application = express();
