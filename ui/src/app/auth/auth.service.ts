@@ -14,7 +14,7 @@ export class AuthService {
     return this.authenticated;
   }
 
-  public authenticate(name: string, password: string) {
+  public authenticate(username: string, password: string) {
     this.authenticated = true;
   }
 }

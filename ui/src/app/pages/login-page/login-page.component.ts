@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
 
+  username: string;
+  password: string;
+
   constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -18,7 +21,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
-    this.auth.authenticate('', '');
+    this.auth.authenticate(this.username, this.password);
     this.router.navigate(['summary']);
   }
 }
