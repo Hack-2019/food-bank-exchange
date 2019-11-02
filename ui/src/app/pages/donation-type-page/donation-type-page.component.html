@@ -18,3 +18,14 @@
     <button type="submit" [disabled]="!nameform.form.valid" class="btn btn-success">Submit</button>
   </form>
 </div>
+
+<div class="force-to-the-bottom">
+  <tag-input [ngModel]="['hardocoded-item']">
+    <tag-input-dropdown
+      [autocompleteItems]="items"
+      [showDropdownIfEmpty]="true"
+      [dynamicUpdate]="false"
+    >
+    </tag-input-dropdown>
+  </tag-input>
+</div>

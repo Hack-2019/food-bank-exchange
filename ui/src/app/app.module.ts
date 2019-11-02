@@ -9,6 +9,10 @@ import { SummaryPageComponent } from './pages/summary-page/summary-page.componen
 import { DonationTypeComponent } from './pages/donation-type-page/donation-type-page.component';
 import { FormsModule } from '@angular/forms';
 
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +24,11 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+
+    TagInputModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
