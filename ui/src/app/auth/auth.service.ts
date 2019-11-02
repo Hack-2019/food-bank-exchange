@@ -11,7 +11,9 @@ export class AuthService {
   private authChangeEmitter = new EventEmitter();
   public authChange = this.authChangeEmitter.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.authenticated = window.localStorage.getItem('user');
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -30,8 +32,9 @@ export class AuthService {
       this.http.post(`http://${environment.server}/login`, JSON.stringify(body), this.httpOptions).subscribe((resp) => {
         if ((resp as Response).username) {
           this.authenticated = (resp as Response).username;
-          resolve(true);
+          window.localStorage.setItem('user', (resp as Response).username);
           this.authChangeEmitter.emit();
+          resolve(true);
         } else {
           resolve(false);
         }
@@ -48,6 +51,7 @@ export class AuthService {
 
   public logout() {
     this.authenticated = null;
+    window.localStorage.removeItem('user');
     this.authChangeEmitter.emit();
   }
 
