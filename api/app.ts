@@ -1,12 +1,11 @@
 import express = require('express');
 import { MongoClient } from "mongodb";
+const { Firestore } = require("@google-cloud/firestore");
 
 const cors = require("cors");
 const API_PORT = 8080;
-const MONGO_SERVER = 'mongodb://localhost:27017';
-const MONGO_DATABASE = 'food_exchange';
 
-let db: any;
+const firestore = new Firestore({projectId: "foodbankexchange", keyFilename: 'gcloud-credentials.json'});
 
 // Create a new express application instance
 const app: express.Application = express();
