@@ -6,10 +6,15 @@ import {HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+  private authenticated = false;
 
   constructor(private http: HttpClient) { }
 
   public isAuthenticated(): boolean {
-    return true;
+    return this.authenticated;
+  }
+
+  public authenticate(name: string, password: string) {
+    this.authenticated = true;
   }
 }

@@ -16,4 +16,9 @@ export class LoginPageComponent implements OnInit {
       this.router.navigate(['summary']);
     }
   }
+
+  onSubmit() {
+    this.auth.authenticate('', '');
+    this.router.navigate(['summary']);
+  }
 }
