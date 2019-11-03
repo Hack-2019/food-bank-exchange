@@ -30,7 +30,7 @@ export class AuthService {
   public checkAuth()  {
     this.http.get(`http://${environment.server}/register/isloggedin`, this.httpOptions).subscribe((resp: any) => {
       if (resp.isLoggedIn === false) {
-        this.authenticated = null;
+        this.logout();
         this.router.navigate(['']);
       }
     });
