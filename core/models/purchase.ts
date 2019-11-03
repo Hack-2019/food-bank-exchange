@@ -1,9 +1,9 @@
-export class Purchase {
+export interface Purchase {
     id: string;
     items: PurchaseItem[];
 }
 
-export class PurchaseItem {
-    productId: string;
+export interface PurchaseItem {
+    foodName: string;
     quantity: number;
 }

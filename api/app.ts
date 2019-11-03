@@ -44,10 +44,13 @@ const foodController = require('./controllers/food.controller');
 app.use('/food', foodController);
 
 const stockController = require('./controllers/stock.controller');
-app.use('/stock', stockController)
+app.use('/stock', stockController);
+
+const marketplaceController = require('./controllers/marketplace.controller');
+app.use('/marketplace', marketplaceController);
 
 // Setup middleware for password
-app.use(express.static('public'));
+app.use(express.static('../..'));
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(session({ secret: 'nothing in the world'}));
