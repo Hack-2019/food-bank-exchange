@@ -37,7 +37,7 @@ router.post('', ((req: any, res: any, next: any) => {
 }));
 
 router.get('/isloggedin', (req: any, res: any, next: any) => {
-    res.status(200).send({"isLoggedIn": req.user});
+    res.status(200).send({"isLoggedIn": req.user != null || req.user != undefined});
 });
 
 module.exports = router;
