@@ -13,7 +13,7 @@ router.get('/add', (((req: any, res: any, next: any) => {
                 if (ref) {
                     res.status(200).send(ref);
                 } else {
-                    res.sendStatus(500);
+                    res.status(500).send({});
                 }
 
                 next();

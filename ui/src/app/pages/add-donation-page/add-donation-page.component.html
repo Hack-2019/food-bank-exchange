@@ -1,5 +1,8 @@
 <h1>Add Donation</h1>
 <form>
+  <div *ngIf="success" class="alert alert-success">
+    Donation Saved!
+  </div>
   <div class="input-group">
     <label for="foodNameInput">Food Name:</label>
     <tag-input #foodNameInput name="foodNameInput" id="foodNameInput"

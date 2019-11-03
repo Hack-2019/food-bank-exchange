@@ -16,7 +16,7 @@ router.get('/list', ((req: any, res: any, next: any) => {
             .get()
             .then((result) => {
                 if (result.size != 1) {
-                    res.sendStatus(404);
+                    res.status(404).send({});
                 } else {
                     let store: Stock = {
                         foods: result.docs[0].get("foods"),
@@ -24,10 +24,12 @@ router.get('/list', ((req: any, res: any, next: any) => {
                     };
 
                     res.status(200).send(store);
+                    next();
                 }
             });
     } else {
         res.sendStatus(403);
+        next();
     }
 }));
 
@@ -56,7 +58,8 @@ router.post('/donate', ((req: any, res: any, next: any) => {
             });
 
             result.docs[0].ref.update("foods", foods).then(ref => {
-                res.sendStatus(200);
+                res.status(200).send({test:"test"});
+                next();
             });
         });
 }));
@@ -80,7 +83,8 @@ router.post('/purchase', ((req: any, res: any, next: any) => {
             });
 
             result.docs[0].ref.update("foods", foods).then((ref => {
-                res.sendStatus(200);
+                res.status(200).send({});
+                next();
             }));
         });
 }));

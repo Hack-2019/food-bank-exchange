@@ -19,7 +19,7 @@ router.post('', ((req: any, res: any, next: any) => {
                    if (ref) {
                        res.status(201).send({username: req.body.username});
                    } else {
-                       res.sendStatus(500);
+                       res.status(500).send({});
                    }
 
                    next();

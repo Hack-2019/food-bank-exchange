@@ -27,13 +27,16 @@ router.post('/add', (((req: any, res: any, next: any) => {
             if (result.size == 0) {
                 firestore.collection("foods").add(req.body).then(ref => {
                     if (ref) {
-                        res.sendStatus(201);
+                        res.status(201).send({});
+                        next();
                     } else {
-                        res.sendStatus(500);
+                        res.status(500).send({});
+                        next();
                     }
                 });
             } else {
-                res.sendStatus(403);
+                res.status(403).send({});
+                next();
             }
         });
 })));

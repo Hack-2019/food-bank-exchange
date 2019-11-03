@@ -51,10 +51,10 @@ router.post('/update/need', ((req: any, res: any, next: any) => {
                 // Create the entry
                 firestore.collection("marketplace").add(entry).then(ref => {
                     if (ref) {
-                        res.sendStatus(201);
+                        res.status(201).send({});
                         next();
                     } else {
-                        res.sendStatus(500);
+                        res.status(500).send({});
                         next();
                     }
                 });
@@ -67,7 +67,7 @@ router.post('/update/need', ((req: any, res: any, next: any) => {
                     oldNeeds.push({username: req.user.username, quantity: body.newQuantity});
                 }
                 result.docs[0].ref.update("needs", oldNeeds).then(() => {
-                    res.sendStatus(200);
+                    res.status(200).send({});
                     next();
                 })
             }
@@ -97,10 +97,10 @@ router.post('/update/provision', ((req: any, res: any, next: any) => {
                 // Create the entry
                 firestore.collection("marketplace").add(entry).then(ref => {
                     if (ref) {
-                        res.sendStatus(201);
+                        res.status(201).send({});
                         next();
                     } else {
-                        res.sendStatus(500);
+                        res.status(500).send({});
                         next();
                     }
                 });
@@ -113,7 +113,7 @@ router.post('/update/provision', ((req: any, res: any, next: any) => {
                     oldProviders.push({username: req.user.username, quantity: body.newQuantity});
                 }
                 result.docs[0].ref.update("providers", oldProviders).then(() => {
-                    res.sendStatus(200);
+                    res.status(200).send({});
                     next();
                 })
             }
