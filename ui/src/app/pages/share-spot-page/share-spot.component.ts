@@ -44,7 +44,6 @@ export class ShareSpotComponent implements OnInit {
 
   loadMarketplace(): void {
     this.http.get<MarketplaceEntry[]>("http://" + environment.server + "/marketplace/list", this.httpOptions).subscribe((entries: MarketplaceEntry[]) => {
-      console.log("I'm here")
       this.http.get<Stock>("http://" + environment.server + "/stock/list", this.httpOptions).subscribe((stock: Stock) => {
         let curUser = this.auth.getAuthenticatedUser();
 
@@ -55,12 +54,20 @@ export class ShareSpotComponent implements OnInit {
 
         entries.forEach((entry) => {
           entry.needs.forEach(need => {
-            if (need.username == curUser) {
-              usersNeeds.push({foodName: entry.foodName, quantity: need.quantity, userNeed: need});
-            } else {
-              let usersStock = stock.foods.find((food) => food.name == entry.foodName);
-              if (usersStock.quantity >= 0) {
-                canProvide.push({foodName: entry.foodName, neededQuantity: need.quantity, needyUsername: need.username, ownedQuantity: usersStock.quantity});
+            // @ts-ignore
+            if (need != "") {
+              if (need.username == curUser) {
+                usersNeeds.push({foodName: entry.foodName, quantity: need.quantity, userNeed: need});
+              } else {
+                let usersStock = stock.foods.find((food) => food.name == entry.foodName);
+                if (usersStock.quantity >= 0) {
+                  canProvide.push({
+                    foodName: entry.foodName,
+                    neededQuantity: need.quantity,
+                    needyUsername: need.username,
+                    ownedQuantity: usersStock.quantity
+                  });
+                }
               }
             }
           });

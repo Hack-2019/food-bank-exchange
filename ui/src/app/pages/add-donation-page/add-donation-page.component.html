@@ -1,12 +1,12 @@
-<h1>Add Donation</h1>
+<h3>Donation</h3>
+<div *ngIf="success" class="alert alert-success">
+  Donation Successful!
+</div>
 <form>
-  <div *ngIf="success" class="alert alert-success">
-    Donation Saved!
-  </div>
-  <div class="input-group">
-    <label for="foodNameInput">Food Name:</label>
-    <tag-input #foodNameInput name="foodNameInput" id="foodNameInput"
-               [ngModel]="[]"
+  <div class="input-group food-name-container">
+    <label for="foodNameInput" class="food-name-input-label">Food Name:</label>
+    <tag-input #foodNameInput name="foodNameInput" id="foodNameInput" class="food-name-input"
+               [ngModel]="foodName"
                [onlyFromAutocomplete]="false"
                [ngModelOptions]="{standalone: true}"
                [maxItems]="1"
@@ -18,17 +18,25 @@
       >
       </tag-input-dropdown>
     </tag-input>
+    <mat-slide-toggle #barcodeSlide class="barcode-checkbox"
+                      (toggleChange)="barcodeChange()">
+      Barcode
+    </mat-slide-toggle>
     <div style="color:red;" *ngIf="invalidSubmissionAttempted" class="alert alert-danger">
       Food name is required.
     </div>
   </div>
-  <div class="input-group">
-    <label for="quantityInput">Quantity:</label>
-    <input #quantity name="quantityInput" id="quantityInput" type="text" class="form-control" [defaultValue]="0">
+  <div class="input-group quantity-input-container">
+    <label for="quantityInput" class="quantity-input-label">Quantity:</label>
+    <input #quantity name="quantityInput" id="quantityInput" type="text" class="form-control quantity-input" [defaultValue]="0">
   </div>
 
   <button type="submit" [disabled]="foodNameInput.items.length == 0" (click)="onSubmit(foodNameInput.items, quantity.value)"
-          class="btn btn-success">
+          class="btn btn-success submit-button">
     Submit
   </button>
 </form>
+
+<div [hidden]=!barcodeEnabled class="barcode-container">
+  <barcode-scanner-livestream type="upc" (valueChanges)="onValueChanges($event)"></barcode-scanner-livestream>
+</div>

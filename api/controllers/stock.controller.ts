@@ -11,7 +11,7 @@ router.get('/list', ((req: any, res: any, next: any) => {
 
     if (req.user) {
         firestore.collection('stock')
-            .where("username", "==", 'test')
+            .where("username", "==", req.user.username)
             .limit(1)
             .get()
             .then((result) => {
@@ -41,6 +41,8 @@ router.post('/donate', ((req: any, res: any, next: any) => {
         .get()
         .then(result => {
             let foods: StockItem[] = result.docs[0].get("foods");
+            let wasEmpty = foods.length == 0;
+
             req.body.items.forEach((donated: DonationItem) => {
                 let found = false;
                 foods.forEach((existing: StockItem) => {
@@ -52,13 +54,26 @@ router.post('/donate', ((req: any, res: any, next: any) => {
 
                 if (!found) {
                     foods.push({name: donated.foodName, quantity: donated.quantity});
+                    console.log(JSON.stringify(donated));
                 }
             });
 
-            result.docs[0].ref.update("foods", foods).then(ref => {
-                res.status(200).send({test:"test"});
-                next();
-            });
+            if (wasEmpty) {
+                const stock: Stock = {
+                    username: req.user.username,
+                    foods: foods
+                };
+
+                result.docs[0].ref.set(stock).then((ref: any) => {
+                    res.status(200).send({test:"test"});
+                    next();
+                });
+            } else {
+                result.docs[0].ref.update("foods", foods).then((ref: any) => {
+                    res.status(200).send({test:"test"});
+                    next();
+                });
+            }
         });
 }));
 
@@ -66,7 +81,7 @@ router.post('/purchase', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
 
     firestore.collection("stock")
-        .where("username", "==", "test")
+        .where("username", "==", req.user.username)
         .limit(1)
         .get()
         .then(result => {

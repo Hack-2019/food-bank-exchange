@@ -1,0 +1,56 @@
+.name-barcode-container {
+  padding-top: 10px;
+  display: flex !important;
+  flex-direction: row;
+  height: 32px
+}
+
+.food-name-label {
+  padding-right: 10px;
+  flex: 0 0 60px;
+}
+
+.food-name-input {
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 32px;
+}
+
+.barcode-checkbox {
+  padding-left: 10px;
+}
+
+.tag-input-container {
+  display: flex !important;
+  flex-direction: row;
+}
+
+.tag-input-label {
+  height: 32px;
+  padding-top: 8px;
+  flex: 0 0 60px;
+}
+
+.tag-input {
+  flex: 1 1 100%;
+}
+
+.name-alert {
+  margin-top: 30px;
+}
+
+.barcode-container {
+  padding-top: 15px;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.submit-button {
+  padding-right: 10px;
+}
+
+.upc-display {
+  text-align: center;
+  padding-left: 10px;
+  font-weight: bold;
+}

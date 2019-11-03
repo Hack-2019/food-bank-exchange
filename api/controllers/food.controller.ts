@@ -2,6 +2,7 @@ import {FirebaseFirestore} from "@firebase/firestore-types";
 import {FoodTag} from '../../core/models/food.tag';
 import {Food} from '../../core/models/food';
 import { getImage } from "../api/image-api";
+import {UpcSearch, UpcSearchResult} from '../../core/models/upc.search';
 
 export {};
 const express = require('express');
@@ -51,10 +52,28 @@ router.get('/list', (((req: any, res: any, next: any) => {
         .limit(1000000000)
         .get()
         .then((result => {
-            const entries: Food[] = result.docs.map(d => <Food>{name: d.get("name"), tags: d.get("tags")});
+            const entries: Food[] = result.docs.map(d => <Food>{name: d.get("name"), tags: d.get("tags"), url: d.get('url')});
             res.status(200).send(entries);
             next();
         }));
 })));
+
+router.post("/search/upc", ((req: any, res: any, next: any) => {
+    const firestore: FirebaseFirestore = req.firestore;
+
+    const search: UpcSearch = req.body;
+    firestore.collection("foods")
+        .where("upc", "==", search.upc)
+        .limit(1)
+        .get()
+        .then((results) => {
+            let productName: string;
+            if (results.size > 0) {
+                productName = res.docs[0].get("name");
+            }
+
+            res.status(200).send(<UpcSearchResult>{upc: search.upc, productName: name});
+        })
+}));
 
 module.exports = router;
