@@ -3,6 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { makeRe } from 'minimatch';
 
 @Component({
   selector: 'app-summary-page',
@@ -11,38 +14,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class SummaryPageComponent implements OnInit {
 
-  dataSource = new MatTableDataSource([
-      {
-          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
-          quantity: 8,
-          name: 'Beet'
-      },
-      {
-          url: 'https://pcdn.columbian.com/wp-content/uploads/2019/08/0830_met_cabbage-1226x0-c-default.jpg',
-          quantity: 8,
-          name: 'Cabbage'
-      },
-      {
-          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
-          quantity: 8,
-          name: 'Beet'
-      },
-      {
-          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
-          quantity: 8,
-          name: 'Beet'
-      },
-      {
-          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
-          quantity: 8,
-          name: 'Beet'
-      },
-      {
-          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
-          quantity: 8,
-          name: 'Beet'
-      },
-  ]);
+  dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['image', 'name', 'quantity',];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -50,12 +22,48 @@ export class SummaryPageComponent implements OnInit {
 
   user: string;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private http: HttpClient) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.user = this.auth.getAuthenticatedUser();
+
+    this.dataSource = await this.getData();
+
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  async getData(): Promise<MatTableDataSource<any>> {
+    return new Promise(async (resolve) => {
+      const stock = this.makeRequest('stock/list');
+      const food = this.makeRequest('food/list');
+
+      const foods = (await stock).foods;
+
+      foods.forEach(async element => {
+          element.url = this.getUrlFor(element.name, await food);
+      });
+
+      resolve(new MatTableDataSource(foods));
+    });
+  }
+
+  getUrlFor(name: string, food: any): string {
+    let ret: string;
+    food.forEach(element => {
+      if (element.name === name) {
+        ret = element.url;
+      }
+    });
+    return ret;
+  }
+
+  makeRequest(endpoint: string): Promise<any> {
+      return new Promise((resolve) => {
+        this.http.get(`http://${environment.server}/${endpoint}`, {withCredentials: true}).subscribe((resp) => {
+            resolve(resp);
+        });
+      });
   }
 
 }
