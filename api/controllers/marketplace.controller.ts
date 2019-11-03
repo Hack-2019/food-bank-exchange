@@ -75,7 +75,6 @@ router.post('/update/need', ((req: any, res: any, next: any) => {
 }));
 
 router.post('/update/provision', ((req: any, res: any, next: any) => {
-    console.log("here!");
     const firestore: FirebaseFirestore = req.firestore;
     const body: UpdateProvision = req.body;
 

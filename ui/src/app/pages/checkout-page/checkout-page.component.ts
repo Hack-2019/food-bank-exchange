@@ -29,7 +29,6 @@ export class CheckoutPageComponent implements OnInit {
     this.http.get<Food[]>("http://" + environment.server + "/food/list")
       .subscribe((foods) => {
         this.foodNames = foods.map(food => food.name);
-        console.log(this.foodNames);
       });
   }
   ngOnInit() {

@@ -35,8 +35,6 @@ router.get('/list', ((req: any, res: any, next: any) => {
 
 router.post('/donate', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
-    console.log("another test " + req.isAuthenticated());
-    console.log("yet another " + req.session);
     firestore.collection("stock")
         .where("username", "==", req.user.username)
         .limit(1)

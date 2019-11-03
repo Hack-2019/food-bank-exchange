@@ -55,7 +55,6 @@ passport.use(new LocalStrategy(
                 }
 
                 if (result.docs[0].get("password") == password) {
-                    console.log("here i am!");
                     return done(null, result.docs[0].data());
                 } else {
                     return done(null, false, { message: "incorrect password" });
@@ -74,19 +73,16 @@ app.post('/login', (req: any, res: any, next: any) => {
                     let response: LoginResult = new LoginResult(user.username);
                     res.status(200).send(response);
                 }
-                console.log("testing");
             });
         }
     })(req, res, next);
 });
 
 passport.serializeUser((user: any, done: any) => {
-    console.log("deserial " + JSON.stringify(user));
     done(null, user);
 });
 
 passport.deserializeUser((user: any, done: any) => {
-    console.log(user);
     done(null, user);
 });
 
@@ -111,5 +107,4 @@ app.use('/marketplace', marketplaceController);
 
 // Initialize database, and open server listener
 app.listen(API_PORT, function () {
-    console.log(`API web service started on port ${API_PORT}.`);
 });

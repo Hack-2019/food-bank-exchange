@@ -46,7 +46,6 @@ export class ShareSpotComponent implements OnInit {
     this.http.get<MarketplaceEntry[]>("http://" + environment.server + "/marketplace/list", this.httpOptions).subscribe((entries: MarketplaceEntry[]) => {
       console.log("I'm here")
       this.http.get<Stock>("http://" + environment.server + "/stock/list", this.httpOptions).subscribe((stock: Stock) => {
-        console.log("now I'm here");
         let curUser = this.auth.getAuthenticatedUser();
 
         let canProvide: CanProvide[] = [];
@@ -56,12 +55,10 @@ export class ShareSpotComponent implements OnInit {
 
         entries.forEach((entry) => {
           entry.needs.forEach(need => {
-            console.log(need);
             if (need.username == curUser) {
               usersNeeds.push({foodName: entry.foodName, quantity: need.quantity, userNeed: need});
             } else {
               let usersStock = stock.foods.find((food) => food.name == entry.foodName);
-              console.log(usersStock);
               if (usersStock.quantity >= 0) {
                 canProvide.push({foodName: entry.foodName, neededQuantity: need.quantity, needyUsername: need.username, ownedQuantity: usersStock.quantity});
               }
@@ -79,7 +76,6 @@ export class ShareSpotComponent implements OnInit {
             });
           }
         });
-        console.log(canProvide);
         this.canProvideDataSource.data = canProvide;
         this.canReceiveDataSource.data = canReceive;
       });

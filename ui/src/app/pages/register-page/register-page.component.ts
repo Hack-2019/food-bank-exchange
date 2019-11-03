@@ -21,7 +21,6 @@ export class RegisterPageComponent implements OnInit {
 
   async onSubmit() {
     const resp = await this.auth.createUser(this.username, this.password);
-    console.log(resp);
     
     if (resp === 'Created') {
       this.router.navigate(['']);
