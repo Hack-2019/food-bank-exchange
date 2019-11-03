@@ -63,7 +63,7 @@ export class AddDonationPageComponent implements OnInit {
   }
 
   onSubmit(names: any[], quantity: string) {
-      console.log("testing213: + " + JSON.stringify(names[0]));
+      this.success = false;
 
       let quantityNum = parseInt(quantity);
       let request: Donation = {items: [
@@ -71,6 +71,7 @@ export class AddDonationPageComponent implements OnInit {
         ]};
       this.http.post("http://" + environment.server + "/stock/donate", request, this.httpOptions).subscribe(r => {
       this.success = true
+        this.foodName = [];
     });
   }
 
