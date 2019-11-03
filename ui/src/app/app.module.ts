@@ -15,6 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
     HttpClientModule,
 
     TagInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     BrowserAnimationsModule,
     ReactiveFormsModule
   ],
