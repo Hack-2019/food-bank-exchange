@@ -7,16 +7,17 @@ import { AddProductComponent } from './pages/add-product-page/add-product-page.c
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import {ShareSpotComponent} from "./pages/share-spot-page/share-spot.component";
-
+import { UpdateNeedPageComponent } from './update-need-page/update-need-page.component';
+import {ShareSpotComponent} from './pages/share-spot-page/share-spot.component';
 
 const routes: Routes = [
   { path: 'summary', component: SummaryPageComponent, canActivate: [AuthGuardService] },
   { path: 'add-donation', component: AddDonationPageComponent, canActivate: [AuthGuardService] },
   { path: 'checkout', component: CheckoutPageComponent, canActivate: [AuthGuardService] },
+  { path: 'update-need', component: UpdateNeedPageComponent, canActivate: [AuthGuardService] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuardService] },
-  { path: 'register', component: RegisterPageComponent },
   { path: 'share-spot', component: ShareSpotComponent, canActivate: [AuthGuardService] },
+  { path: 'register', component: RegisterPageComponent },
   { path: '', component: LoginPageComponent },
   { path: '**', redirectTo: '' }
 ];
