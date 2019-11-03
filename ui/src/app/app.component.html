@@ -19,14 +19,14 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/add-product" routerActive="active">Add Product</a>
         </li>
-        <li *ngIf="authenticated" class="nav-item dropdown">
-            <a routerLink="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+        <li style="cursor: pointer;" *ngIf="authenticated" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <img src="https://img.icons8.com/material-sharp/24/000000/user.png">{{authenticatedUser}}
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
                 <li>
-                  <a routerLink="" (click)="logout()">Logout</a>
+                  <a style="margin: 0 1em;" (click)="logout()">Logout</a>
                 </li>
             </ul>
           </li>
