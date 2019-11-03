@@ -5,6 +5,7 @@ import {UpdateProvision} from "../../core/models/marketplace/update.provision";
 import * as firebase from "firebase";
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 export {};
 const express = require('express');
@@ -12,11 +13,12 @@ const router = express.Router();
 
 router.get('/list', (((req: any, res: any, next: any) => {
     const firestore = req.firestore;
-    console.log("here i am!");
+
     firestore.collection("marketplace")
         .limit(100000000)
-        .then((ref: DocumentSnapshot[]) => {
-            let entries = ref.map((r: DocumentSnapshot) => <MarketplaceEntry>{
+        .get()
+        .then((ref: QuerySnapshot) => {
+            let entries = ref.docs.map((r: DocumentSnapshot) => <MarketplaceEntry>{
                 foodName: r.get("foodName"),
                 needs: r.get("needs"),
                 providers: r.get("providers")
@@ -104,7 +106,7 @@ router.post('/update/provision', ((req: any, res: any, next: any) => {
                 });
             } else {
                 const oldProviders: MarketplaceProvider[] = result.docs[0].get('providers');
-                const usersEntry = oldProviders.find((need) => need.username = "test");
+                const usersEntry = oldProviders.find((need) => need.username = req.user.username);
                 if (usersEntry) {
                     usersEntry.quantity = body.newQuantity;
                 } else {
