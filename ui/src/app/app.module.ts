@@ -18,6 +18,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { UpdateNeedPageComponent } from './update-need-page/update-need-page.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AddProductComponent,
     LoginPageComponent,
     RegisterPageComponent,
+    UpdateNeedPageComponent,
+    UpdateNeedPageComponent,
   ],
   imports: [
     BrowserModule,
