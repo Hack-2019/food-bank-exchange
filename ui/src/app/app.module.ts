@@ -7,8 +7,9 @@ import { AddDonationPageComponent } from './pages/add-donation-page/add-donation
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
 import { AddProductComponent } from './pages/add-product-page/add-product-page.component';
-import { FormsModule } from '@angular/forms';
+import { ShareSpotComponent } from './pages/share-spot-page/share-spot.component';
 
+import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,8 +30,12 @@ import { UpdateNeedPageComponent } from './update-need-page/update-need-page.com
     AddProductComponent,
     LoginPageComponent,
     RegisterPageComponent,
+<<<<<<< HEAD
     UpdateNeedPageComponent,
     UpdateNeedPageComponent,
+=======
+    ShareSpotComponent,
+>>>>>>> f05aa356401065ccac39e987074d83edb8206855
   ],
   imports: [
     BrowserModule,

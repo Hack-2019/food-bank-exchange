@@ -7,7 +7,11 @@ import { AddProductComponent } from './pages/add-product-page/add-product-page.c
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+<<<<<<< HEAD
 import { UpdateNeedPageComponent } from './update-need-page/update-need-page.component';
+=======
+import {ShareSpotComponent} from "./pages/share-spot-page/share-spot.component";
+>>>>>>> f05aa356401065ccac39e987074d83edb8206855
 
 
 const routes: Routes = [
@@ -17,6 +21,7 @@ const routes: Routes = [
   { path: 'update-need', component: UpdateNeedPageComponent, canActivate: [AuthGuardService] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuardService] },
   { path: 'register', component: RegisterPageComponent },
+  { path: 'share-spot', component: ShareSpotComponent, canActivate: [AuthGuardService] },
   { path: '', component: LoginPageComponent },
   { path: '**', redirectTo: '' }
 ];
