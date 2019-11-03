@@ -26,7 +26,7 @@ router.post('/add', (((req: any, res: any, next: any) => {
             if (result.size == 0) {
                 firestore.collection("foods").add(req.body).then(ref => {
                     if (ref) {
-                        res.sendStatus(201);
+                        res.status(201).send({});
                     } else {
                         res.sendStatus(500);
                     }
