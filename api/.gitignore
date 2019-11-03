@@ -5,3 +5,4 @@ dist
 # Don't commit the user's api key
 gcloud-credentials.json
 oauth.credentials.ts
+image-api-credentials.ts

@@ -13,31 +13,37 @@ export class SummaryPageComponent implements OnInit {
 
   dataSource = new MatTableDataSource([
       {
+          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
           quantity: 8,
           name: 'Beet'
       },
       {
+          url: 'https://pcdn.columbian.com/wp-content/uploads/2019/08/0830_met_cabbage-1226x0-c-default.jpg',
           quantity: 8,
           name: 'Cabbage'
       },
       {
+          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
           quantity: 8,
           name: 'Beet'
       },
       {
+          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
           quantity: 8,
           name: 'Beet'
       },
       {
+          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
           quantity: 8,
           name: 'Beet'
       },
       {
+          url: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/AN172-Beets-1296x728-Header.jpg?w=1155',
           quantity: 8,
           name: 'Beet'
       },
   ]);
-  displayedColumns: string[] = ['name', 'quantity'];
+  displayedColumns: string[] = ['image', 'name', 'quantity',];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
