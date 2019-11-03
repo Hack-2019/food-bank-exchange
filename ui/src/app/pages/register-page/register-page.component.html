@@ -1,3 +1,5 @@
+<div *ngIf="err"><b>User already exists! Try again!</b></div>
+<div *ngIf="already"><b>User already exists! Try again!</b></div>
 <form class="form-signin" (ngSubmit)="onSubmit()">
         <h1 class="h3 mb-3 font-weight-normal">Create an Account</h1>
         <input type="text" id="inputText" class="form-control" placeholder="Name" name="username" [(ngModel)]="username" required autofocus>
