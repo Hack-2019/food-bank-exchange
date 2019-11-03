@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FoodTag } from "../../../../../core/models/food.tag";
+import { Food } from "../../../../../core/models/food";
 import {BarecodeScannerLivestreamComponent} from "ngx-barcode-scanner";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-donation-type',
@@ -9,6 +11,8 @@ import {BarecodeScannerLivestreamComponent} from "ngx-barcode-scanner";
   styleUrls: ['./add-product-page.component.css']
 })
 export class AddProductComponent implements OnInit {
+  @ViewChild("barcodeSlide", {static: true}) ref: any;
+
   barcodeEnabled: boolean = false;
 
   @ViewChild(BarecodeScannerLivestreamComponent, {static: false})
@@ -25,9 +29,10 @@ export class AddProductComponent implements OnInit {
   {
     this.booleanSet = false;
     this.httpClient.post('http://localhost:8080/food/add',
-    {
+    <Food>{
       name : somethingElse,
-      tags : somethingElse2.map(el=> el.value)
+      tags : somethingElse2.map(el=> el.value),
+      upc:  this.barcodeValue
     }).subscribe(results => {
       this.booleanSet = true;
     });
@@ -51,33 +56,29 @@ export class AddProductComponent implements OnInit {
   }
 
   onValueChanges(result){
-    if (this.barcodeGuesses.length > 10) {
-      this.barcodeGuesses.push(result);
-      this.barcodeGuesses.shift();
-    } else {
-      this.barcodeGuesses.push(result);
-    }
+    this.barcodeGuesses.push(result.codeResult.code);
 
-    let guesses = new Map<string, number>();
-    this.barcodeGuesses.forEach(guess => {
-      if (guesses.has(guess.codeResult.code)) {
-        guesses.set(guess.codeResult.code, guesses.get(guess.codeResult.code) + 1);
+    console.log(result.codeResult.code);
+    let barcodeOccurrences = new Map<string, number>();
+    let confidentValue: string;
+    this.barcodeGuesses.forEach((value) => {
+      if (barcodeOccurrences.has(value)) {
+        const cur = barcodeOccurrences.get(value) + 1;
+        if (cur > 4) {
+          console.log("confident found");
+          confidentValue = value;
+          this.barcodeGuesses = [];
+          this.ref.checked = false;
+          this.barcodeChange();
+        }
+        barcodeOccurrences.set(value, cur);
       } else {
-        guesses.set(guess.codeResult.code, 1);
+        barcodeOccurrences.set(value, 1);
       }
     });
 
-    console.log(guesses);
-
-    let mostCommonGuess;
-    let mostCommonGuessCount;
-    guesses.forEach((count, guess) => {
-      if (mostCommonGuess == undefined || mostCommonGuessCount < count) {
-        mostCommonGuess = guess;
-        mostCommonGuessCount = count;
-      }
-    });
-
-    this.barcodeValue = mostCommonGuess;
+    if (confidentValue) {
+      this.barcodeValue = confidentValue;
+    }
   }
 }

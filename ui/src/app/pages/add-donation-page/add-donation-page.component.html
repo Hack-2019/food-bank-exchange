@@ -6,7 +6,7 @@
   <div class="input-group food-name-container">
     <label for="foodNameInput" class="food-name-input-label">Food Name:</label>
     <tag-input #foodNameInput name="foodNameInput" id="foodNameInput" class="food-name-input"
-               [ngModel]="[]"
+               [ngModel]="foodName"
                [onlyFromAutocomplete]="false"
                [ngModelOptions]="{standalone: true}"
                [maxItems]="1"
@@ -18,7 +18,7 @@
       >
       </tag-input-dropdown>
     </tag-input>
-    <mat-slide-toggle class="barcode-checkbox"
+    <mat-slide-toggle #barcodeSlide class="barcode-checkbox"
                       (toggleChange)="barcodeChange()">
       Barcode
     </mat-slide-toggle>

@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Food} from '../../../../../core/models/food';
 import {TagModel} from "ngx-chips/core/accessor";
 import {Donation} from '../../../../../core/models/donation';
-import {UpcSearch} from '../../..'
+import {UpcSearch, UpcSearchResult} from '../../../../../core/models/upc.search'
 import {BarecodeScannerLivestreamComponent} from "ngx-barcode-scanner";
 
 @Component({
@@ -14,6 +14,8 @@ import {BarecodeScannerLivestreamComponent} from "ngx-barcode-scanner";
 })
 export class AddDonationPageComponent implements OnInit {
 
+  @ViewChild("barcodeSlide", {static: true}) ref: any;
+
   barcodeEnabled: boolean = false;
 
   @ViewChild(BarecodeScannerLivestreamComponent, {static: false})
@@ -22,6 +24,8 @@ export class AddDonationPageComponent implements OnInit {
   barcodeGuesses = [];
 
   barcodeValue = "";
+
+  foodName = [];
 
   foodNames: string[];
   success: boolean;
@@ -68,33 +72,39 @@ export class AddDonationPageComponent implements OnInit {
   }
 
   onValueChanges(result){
-    if (this.barcodeGuesses.length > 10) {
-      this.barcodeGuesses.push(result);
-      this.barcodeGuesses.shift();
+    this.barcodeGuesses.push(result.codeResult.code);
+    console.log(result.codeResult.code);
+    let barcodeOccurrences = new Map<string, number>();
+    let confidentValue: string;
+    this.barcodeGuesses.forEach((value) => {
+        if (barcodeOccurrences.has(value)) {
+          const cur = barcodeOccurrences.get(value) + 1;
+          if (cur > 4) {
+            console.log("confident foudn");
+            confidentValue = value;
+            this.barcodeGuesses = [];
+            this.ref.checked = false;
+            this.barcodeChange();
+          }
+          barcodeOccurrences.set(value, cur);
+        } else {
+          barcodeOccurrences.set(value, 1);
+        }
+    });
+
+    if (confidentValue) {
+      this.barcodeValue = confidentValue;
+      // Ready to perform the search
+      let search: UpcSearch = {
+        upc: confidentValue
+      }
+      this.http.post("http://" + environment.server + "/food/search/upc", search, this.httpOptions).subscribe((result: UpcSearchResult) => {
+          if (result.productName != undefined) {
+            this.foodName = [result.productName];
+          }
+      });
     } else {
       this.barcodeGuesses.push(result);
     }
-
-    let guesses = new Map<string, number>();
-    this.barcodeGuesses.forEach(guess => {
-      if (guesses.has(guess.codeResult.code)) {
-        guesses.set(guess.codeResult.code, guesses.get(guess.codeResult.code) + 1);
-      } else {
-        guesses.set(guess.codeResult.code, 1);
-      }
-    });
-
-    console.log(guesses);
-
-    let mostCommonGuess;
-    let mostCommonGuessCount;
-    guesses.forEach((count, guess) => {
-      if (mostCommonGuess == undefined || mostCommonGuessCount < count) {
-        mostCommonGuess = guess;
-        mostCommonGuessCount = count;
-      }
-    });
-
-    this.barcodeValue = mostCommonGuess;
   }
 }
