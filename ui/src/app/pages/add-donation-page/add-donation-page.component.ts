@@ -38,7 +38,7 @@ export class AddDonationPageComponent implements OnInit {
       let request: Donation = {items: [
           {foodName: names[0].value, quantity: quantityNum}
         ]};
-      this.http.post("http://" + environment.server + "/stock/donate", request).subscribe(response => {
+      this.http.post("http://" + environment.server + "/stock/donate", request, {withCredentials: true}).subscribe(response => {
 
       });
   }

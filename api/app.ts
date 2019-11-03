@@ -30,30 +30,17 @@ app.use((req: any, res: any, next: any) => {
     next();
 });
 
-// Register API endpoints
-const foodbanksController = require('./controllers/foodbank.controller');
-app.use('/foodbanks', foodbanksController);
-
-const tagsController = require('./controllers/tags.controller');
-app.use('/tags', tagsController);
-
-const registerController = require('./controllers/register.controller');
-app.use('/register', registerController);
-
-const foodController = require('./controllers/food.controller');
-app.use('/food', foodController);
-
-const stockController = require('./controllers/stock.controller');
-app.use('/stock', stockController);
-
-const marketplaceController = require('./controllers/marketplace.controller');
-app.use('/marketplace', marketplaceController);
-
 // Setup middleware for password
-app.use(express.static('../..'));
+app.use(express.static('../ui/dist/food-bank-exchange'));
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(session({ secret: 'nothing in the world'}));
+app.use(session({
+    secret: 'nothingintheworld',
+    name: 'anothertest',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60000 }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,6 +55,7 @@ passport.use(new LocalStrategy(
                 }
 
                 if (result.docs[0].get("password") == password) {
+                    console.log("here i am!");
                     return done(null, result.docs[0].data());
                 } else {
                     return done(null, false, { message: "incorrect password" });
@@ -86,18 +74,40 @@ app.post('/login', (req: any, res: any, next: any) => {
                     let response: LoginResult = new LoginResult(user.username);
                     res.status(200).send(response);
                 }
+                console.log("testing");
             });
         }
     })(req, res, next);
 });
 
 passport.serializeUser((user: any, done: any) => {
+    console.log("deserial " + JSON.stringify(user));
     done(null, user);
 });
 
 passport.deserializeUser((user: any, done: any) => {
+    console.log(user);
     done(null, user);
 });
+
+// Register API endpoints
+const foodbanksController = require('./controllers/foodbank.controller');
+app.use('/foodbanks', foodbanksController);
+
+const tagsController = require('./controllers/tags.controller');
+app.use('/tags', tagsController);
+
+const registerController = require('./controllers/register.controller');
+app.use('/register', registerController);
+
+const foodController = require('./controllers/food.controller');
+app.use('/food', foodController);
+
+const stockController = require('./controllers/stock.controller');
+app.use('/stock', stockController);
+
+const marketplaceController = require('./controllers/marketplace.controller');
+app.use('/marketplace', marketplaceController);
 
 // Initialize database, and open server listener
 app.listen(API_PORT, function () {
