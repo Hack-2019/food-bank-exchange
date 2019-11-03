@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   private authChangeEmitter = new EventEmitter();
   public authChange = this.authChangeEmitter.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.authenticated = window.localStorage.getItem('user');
   }
 
@@ -24,6 +25,15 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     return this.authenticated != null;
+  }
+
+  public checkAuth()  {
+    this.http.get(`http://${environment.server}/register/isloggedin`, this.httpOptions).subscribe((resp: any) => {
+      if (resp.isLoggedIn === false) {
+        this.authenticated = null;
+        this.router.navigate(['']);
+      }
+    });
   }
 
   public authenticate(username: string, password: string): Promise<boolean> {

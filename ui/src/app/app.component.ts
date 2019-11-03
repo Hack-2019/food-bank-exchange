@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,11 @@ export class AppComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.auth.checkAuth();
+      }
+    });
     this.authenticated = this.auth.isAuthenticated();
     this.authenticatedUser = this.auth.getAuthenticatedUser();
     this.auth.authChange.subscribe(() => {
