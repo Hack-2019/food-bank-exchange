@@ -7,6 +7,7 @@ import { AddProductComponent } from './pages/add-product-page/add-product-page.c
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import {ShareSpotComponent} from "./pages/share-spot-page/share-spot.component";
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutPageComponent, canActivate: [AuthGuardService] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuardService] },
   { path: 'register', component: RegisterPageComponent },
+  { path: 'share-spot', component: ShareSpotComponent, canActivate: [AuthGuardService] },
   { path: '', component: LoginPageComponent },
   { path: '**', redirectTo: '' }
 ];
