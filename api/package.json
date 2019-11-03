@@ -4,14 +4,15 @@
   "description": "",
   "main": "dist/api/app.js",
   "scripts": {
-    "start": "node dist/api/app.js",
+    "start": "npm run full-build",
     "start:watch": "nodemon dist/api/app.js",
     "build": "rimraf ./dist && tsc",
     "build:watch": "tsc --watch",
     "serve-dev": "concurrently --kill0others \"npm run build:watch\" \"npm run start:watch\"",
     "test": "echo Not implemented.",
     "lint": "echo Not implemented.",
-    "e2e": "echo Not implemented."
+    "e2e": "echo Not implemented.",
+    "full-build": "cd ../ui && npm run ng build && cd ../api && npm run build && npm run start"
   },
   "private": true,
   "dependencies": {
