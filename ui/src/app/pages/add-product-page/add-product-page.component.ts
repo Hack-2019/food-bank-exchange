@@ -9,17 +9,18 @@ import { FoodTag } from "../../../../../core/models/food.tag";
   styleUrls: ['./add-product-page.component.css']
 })
 export class AddProductComponent implements OnInit {
-
   foodTags: string[];
   foodname: string;
+  booleanSet: boolean = false;
   onSubmit(somethingElse,somethingElse2)
   {
+    this.booleanSet = false;
     this.httpClient.post('http://localhost:8080/food/add',
     {
       name : somethingElse,
       tags : somethingElse2.map(el=> el.value)
     }).subscribe(results => {
-      console.log(results);
+      this.booleanSet = true;
     });
   }
   constructor(private httpClient: HttpClient) { }

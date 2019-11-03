@@ -1,4 +1,7 @@
 <div class="container">
+  <div *ngIf="booleanSet" class="alert alert-success">
+    <label>Product added!</label>
+  </div>
   <h1>Add Product</h1>
   <form #nameform="ngForm">
     <div class="form-group">
@@ -15,18 +18,15 @@
       </div>
     </div>
 
-      <tag-input #somethingElse2 
-        [ngModel]="[]" 
-        [onlyFromAutocomplete]="false" 
-        [ngModelOptions]="{standalone: true}"
+    <div class="form-group">
+      <tag-input #somethingElse2 [ngModel]="[]" [onlyFromAutocomplete]="false" [ngModelOptions]="{standalone: true}"
         [separatorKeyCodes]=[9]>
-        <tag-input-dropdown
-          [showDropdownIfEmpty]="true"
-          [autocompleteItems]="foodTags"
-        >
+        <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="foodTags">
         </tag-input-dropdown>
       </tag-input>
-
-    <button type="submit" [disabled]="!nameform.form.valid" (click) = "onSubmit(somethingElse.value,somethingElse2.items)" class="btn btn-success">Submit</button>
+    </div>
+      <button type="submit" [disabled]="!nameform.form.valid"
+        (click)="onSubmit(somethingElse.value,somethingElse2.items)" class="btn btn-success">Submit</button>
+  
   </form>
 </div>
