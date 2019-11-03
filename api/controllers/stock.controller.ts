@@ -66,7 +66,7 @@ router.post('/purchase', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
 
     firestore.collection("stock")
-        .where("username", "==", "test")
+        .where("username", "==", req.user.username)
         .limit(1)
         .get()
         .then(result => {

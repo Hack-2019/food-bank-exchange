@@ -1,4 +1,5 @@
 import {FirebaseFirestore} from "@firebase/firestore-types";
+import {Stock} from '../../core/models/store';
 
 export {};
 const express = require('express');
@@ -6,6 +7,13 @@ const router = express.Router();
 
 router.post('', ((req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
+
+    // Hopefully this will never fail
+    const newStock: Stock = {
+        foods: [],
+        username: req.user.username
+    };
+    firestore.collection("stock").add(newStock);
 
     firestore.collection("users")
         .where("username", "==", req.body.username)
@@ -27,5 +35,9 @@ router.post('', ((req: any, res: any, next: any) => {
            }
         });
 }));
+
+router.get('/isloggedin', (req: any, res: any, next: any) => {
+    res.status(200).send({"isLoggedIn": req.user});
+});
 
 module.exports = router;
