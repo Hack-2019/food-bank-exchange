@@ -67,12 +67,12 @@ router.post("/search/upc", ((req: any, res: any, next: any) => {
         .limit(1)
         .get()
         .then((results) => {
-            let productName: string;
+            let productName: string = "";
             if (results.size > 0) {
-                productName = res.docs[0].get("name");
+                productName = results.docs[0].get("name");
             }
 
-            res.status(200).send(<UpcSearchResult>{upc: search.upc, productName: name});
+            res.status(200).send(<UpcSearchResult>{upc: search.upc, productName: productName});
         })
 }));
 

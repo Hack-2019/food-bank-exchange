@@ -1,0 +1,37 @@
+.food-name-input-container {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+}
+
+.food-name-input-label {
+    flex: 0 0 100px;
+    height: 42px;
+    padding-top: 8px;
+}
+
+.food-name-input {
+  flex: 1 1;
+  height: 42px;
+}
+
+.quantity-input-container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.quantity-input-label {
+  flex: 0 0 100px;
+  height: 42px;
+  padding-top: 8px;
+}
+
+.quantity-input {
+  flex: 1 1;
+  height: 42px;
+}
+
+.submit-button {
+  margin-top: 10px;
+}

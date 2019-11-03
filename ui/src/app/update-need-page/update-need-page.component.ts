@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class UpdateNeedPageComponent implements OnInit {
 
+  placeholder: string = "Enter the name of an item";
+
   invalidSubmissionAttempted: boolean;
   foodNames: any;
 
