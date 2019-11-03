@@ -22,6 +22,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { UpdateNeedPageComponent } from './update-need-page/update-need-page.component';
 import {BarecodeScannerLivestreamModule} from "ngx-barcode-scanner";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSliderModule} from "@angular/material/slider";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     MatPaginatorModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,7 +11,7 @@ router.get('/list', ((req: any, res: any, next: any) => {
 
     if (req.user) {
         firestore.collection('stock')
-            .where("username", "==", 'test')
+            .where("username", "==", req.user.username)
             .limit(1)
             .get()
             .then((result) => {

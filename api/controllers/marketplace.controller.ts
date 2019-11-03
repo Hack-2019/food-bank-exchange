@@ -60,7 +60,8 @@ router.post('/update/need', ((req: any, res: any, next: any) => {
                 });
             } else {
                 const oldNeeds: MarketplaceNeed[] = result.docs[0].get('needs');
-                const usersEntry = oldNeeds.find((need) => need.username = req.user.username);
+                // @ts-ignore
+                const usersEntry = oldNeeds.find((need) => need != "" && need.username == req.user.username);
                 if (usersEntry) {
                     usersEntry.quantity = body.newQuantity;
                 } else {
@@ -105,7 +106,8 @@ router.post('/update/provision', ((req: any, res: any, next: any) => {
                 });
             } else {
                 const oldProviders: MarketplaceProvider[] = result.docs[0].get('providers');
-                const usersEntry = oldProviders.find((need) => need.username = req.user.username);
+                // @ts-ignore
+                const usersEntry = oldProviders.find((need) => need != "" && need.username == req.user.username);
                 if (usersEntry) {
                     usersEntry.quantity = body.newQuantity;
                 } else {

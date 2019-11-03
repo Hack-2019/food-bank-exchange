@@ -7,6 +7,7 @@ import {AuthService} from "../../auth/auth.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
+import {UpdateProvision} from '../../../../../core/models/marketplace/update.provision'
 
 @Component({
   selector: 'app-share-spot',
@@ -20,7 +21,7 @@ export class ShareSpotComponent implements OnInit {
       <CanProvide>{foodName: "Loading...", neededQuantity: 0, ownedQuantity: 0, needyUsername: "Loading..."}
     ]
   );
-  canProvideDataSourceDisplayedColumns: string[] = ['foodName', 'neededQuantity', 'ownedQuantity', 'needyUsername'];
+  canProvideDataSourceDisplayedColumns: string[] = ['foodName', 'neededQuantity', 'ownedQuantity', 'needyUsername', 'commitment', 'actions'];
 
   canReceiveDataSource= new MatTableDataSource(
     [
@@ -35,6 +36,8 @@ export class ShareSpotComponent implements OnInit {
   httpOptions = {
     withCredentials: true
   };
+
+  values: Map<String, number> = new Map<String, number>();
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -60,7 +63,7 @@ export class ShareSpotComponent implements OnInit {
                 usersNeeds.push({foodName: entry.foodName, quantity: need.quantity, userNeed: need});
               } else {
                 let usersStock = stock.foods.find((food) => food.name == entry.foodName);
-                if (usersStock.quantity >= 0) {
+                if (usersStock != undefined && usersStock.quantity >= 0) {
                   canProvide.push({
                     foodName: entry.foodName,
                     neededQuantity: need.quantity,
@@ -77,7 +80,8 @@ export class ShareSpotComponent implements OnInit {
           let matchingNeed = usersNeeds.find(need => need.foodName);
           if (matchingNeed) {
             entry.providers.forEach(provider => {
-              if (provider.username != curUser) {
+              // @ts-ignore
+              if (provider != "" && provider.username != curUser) {
                 canReceive.push({foodName: entry.foodName, offeredQuantity: provider.quantity, providerUsername: provider.username, requiredQuantity: matchingNeed.userNeed.quantity});
               }
             });
@@ -88,7 +92,25 @@ export class ShareSpotComponent implements OnInit {
       });
     });
   }
+
+  submit(userName, foodName): void {
+    var provisionUpdate: UpdateProvision = {
+        foodName: foodName,
+        newQuantity: this.values.get(userName)
+    };
+    console.log("test");
+
+    this.http.post("http://" + environment.server + "/marketplace/update/provision", provisionUpdate, this.httpOptions).subscribe((res) => {
+        console.log("test");
+    });
+  }
+
+  valueChanged(username: string, newValue: number): void {
+    console.log(username +  " " + newValue);
+    this.values.set(username, newValue);
+  }
 }
+
 
 interface CanProvide {
   foodName: string;
