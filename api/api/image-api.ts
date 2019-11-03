@@ -11,7 +11,6 @@ export async function getImage(query: string): Promise<string> {
             });
             resp.on('end', () => {
                 let dataP = JSON.parse(data);
-                console.log(dataP.items[0].link);
                 resolve(dataP.items[0].link);
             });
         });

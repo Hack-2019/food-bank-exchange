@@ -1,12 +1,13 @@
 import {FirebaseFirestore} from "@firebase/firestore-types";
 import {FoodTag} from '../../core/models/food.tag';
 import {Food} from '../../core/models/food';
+import { getImage } from "../api/image-api";
 
 export {};
 const express = require('express');
 const router = express.Router();
 
-router.post('/add', (((req: any, res: any, next: any) => {
+router.post('/add', ((async (req: any, res: any, next: any) => {
     const firestore: FirebaseFirestore = req.firestore;
 
     req.body.tags.forEach((tag: string) => {
@@ -19,6 +20,8 @@ router.post('/add', (((req: any, res: any, next: any) => {
                  }
              });
     });
+
+    req.body.url = await getImage(req.body.name);
 
     firestore.collection('foods')
         .where("name", "==", req.body.name)
