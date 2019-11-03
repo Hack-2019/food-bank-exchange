@@ -20,6 +20,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UpdateNeedPageComponent } from './update-need-page/update-need-page.component';
+import {BarecodeScannerLivestreamModule} from "ngx-barcode-scanner";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -39,13 +41,15 @@ import { UpdateNeedPageComponent } from './update-need-page/update-need-page.com
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    BarecodeScannerLivestreamModule,
 
     TagInputModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
