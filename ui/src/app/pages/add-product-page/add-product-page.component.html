@@ -1,47 +1,45 @@
-<div class="container">
-  <div *ngIf="booleanSet" class="alert alert-success">
-    <label>Product added!</label>
-  </div>
-  <h2>Add Product</h2>
-  <form #nameform="ngForm">
-    <div class="form-group">
-      <div class="name-barcode-container">
-        <label class="food-name-label" for="foodName">Name: </label>
-        <input #somethingElse type="text" id="foodName" name="foodName" class="form-control food-name-input" required minlength="1" [(ngModel)]="Donation"
-               #name="ngModel">
-
-        <mat-slide-toggle #barcodeSlide class="barcode-checkbox"
-          (toggleChange)="barcodeChange()">
-          Barcode
-        </mat-slide-toggle>
-      </div>
-
-      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger name-alert">
-        <div *ngIf="name.errors.required">
-          Donation name is required.
-        </div>
-        <div *ngIf="name.errors.minlength">
-          Input a donation name.
-        </div>
-      </div>
-    </div>
-
-
-    <div class="form-group tag-input-container">
-      <label class="tag-input-label" for="tagInput">Tags:</label>
-      <tag-input class="tag-input" id="tagInput" #somethingElse2 [ngModel]="[]" [onlyFromAutocomplete]="false" [ngModelOptions]="{standalone: true}"
-        [separatorKeyCodes]=[9]>
-        <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="foodTags">
-        </tag-input-dropdown>
-      </tag-input>
-    </div>
-    <div>
-      <button [disabled]="!nameform.form.valid"
-              (click)="onSubmit(somethingElse.value,somethingElse2.items)" class="btn btn-success submit-button">Submit</button>
-      <span class="upc-display" *ngIf="barcodeValue!=undefined">UPC: {{barcodeValue}}</span>
-    </div>
-  </form>
+<div *ngIf="booleanSet" class="alert alert-success">
+  <label>Product added!</label>
 </div>
+<h3>Add Product</h3>
+<form #nameform="ngForm">
+  <div class="form-group">
+    <div class="name-barcode-container">
+      <label class="food-name-label" for="foodName">Name: </label>
+      <input #somethingElse type="text" id="foodName" name="foodName" class="form-control food-name-input" required minlength="1" [(ngModel)]="Donation"
+              #name="ngModel">
+
+      <mat-slide-toggle #barcodeSlide class="barcode-checkbox"
+        (toggleChange)="barcodeChange()">
+        Barcode
+      </mat-slide-toggle>
+    </div>
+
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger name-alert">
+      <div *ngIf="name.errors.required">
+        Donation name is required.
+      </div>
+      <div *ngIf="name.errors.minlength">
+        Input a donation name.
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group tag-input-container">
+    <label class="tag-input-label" for="tagInput">Tags:</label>
+    <tag-input class="tag-input" id="tagInput" #somethingElse2 [ngModel]="[]" [onlyFromAutocomplete]="false" [ngModelOptions]="{standalone: true}"
+      [separatorKeyCodes]=[9]>
+      <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="foodTags">
+      </tag-input-dropdown>
+    </tag-input>
+  </div>
+  <div>
+    <button [disabled]="!nameform.form.valid"
+            (click)="onSubmit(somethingElse.value,somethingElse2.items)" class="btn btn-success submit-button">Submit</button>
+    <span class="upc-display" *ngIf="barcodeValue!=undefined">UPC: {{barcodeValue}}</span>
+  </div>
+</form>
 
 <div [hidden]=!barcodeEnabled class="barcode-container">
   <barcode-scanner-livestream type="upc" (valueChanges)="onValueChanges($event)"></barcode-scanner-livestream>
