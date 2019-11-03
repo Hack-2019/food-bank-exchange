@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Food} from '../../../../../core/models/food';
 import {TagModel} from "ngx-chips/core/accessor";
 import {Donation} from '../../../../../core/models/donation';
+import {UpcSearch} from '../../..'
+import {BarecodeScannerLivestreamComponent} from "ngx-barcode-scanner";
 
 @Component({
   selector: 'app-add-donation-page',
@@ -11,6 +13,15 @@ import {Donation} from '../../../../../core/models/donation';
   styleUrls: ['./add-donation-page.component.css']
 })
 export class AddDonationPageComponent implements OnInit {
+
+  barcodeEnabled: boolean = false;
+
+  @ViewChild(BarecodeScannerLivestreamComponent, {static: false})
+  barecodeScanner: BarecodeScannerLivestreamComponent;
+
+  barcodeGuesses = [];
+
+  barcodeValue = "";
 
   foodNames: string[];
   success: boolean;
@@ -37,6 +48,15 @@ export class AddDonationPageComponent implements OnInit {
       });
   }
 
+  barcodeChange(): void {
+    this.barcodeEnabled = !this.barcodeEnabled;
+    if (this.barcodeEnabled) {
+      this.barecodeScanner.start();
+    } else {
+      this.barecodeScanner.stop();
+    }
+  }
+
   onSubmit(names: any[], quantity: string) {
       let quantityNum = parseInt(quantity);
       let request: Donation = {items: [
@@ -47,4 +67,34 @@ export class AddDonationPageComponent implements OnInit {
     });
   }
 
+  onValueChanges(result){
+    if (this.barcodeGuesses.length > 10) {
+      this.barcodeGuesses.push(result);
+      this.barcodeGuesses.shift();
+    } else {
+      this.barcodeGuesses.push(result);
+    }
+
+    let guesses = new Map<string, number>();
+    this.barcodeGuesses.forEach(guess => {
+      if (guesses.has(guess.codeResult.code)) {
+        guesses.set(guess.codeResult.code, guesses.get(guess.codeResult.code) + 1);
+      } else {
+        guesses.set(guess.codeResult.code, 1);
+      }
+    });
+
+    console.log(guesses);
+
+    let mostCommonGuess;
+    let mostCommonGuessCount;
+    guesses.forEach((count, guess) => {
+      if (mostCommonGuess == undefined || mostCommonGuessCount < count) {
+        mostCommonGuess = guess;
+        mostCommonGuessCount = count;
+      }
+    });
+
+    this.barcodeValue = mostCommonGuess;
+  }
 }
