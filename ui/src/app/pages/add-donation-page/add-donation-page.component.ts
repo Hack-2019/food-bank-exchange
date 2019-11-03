@@ -73,14 +73,12 @@ export class AddDonationPageComponent implements OnInit {
 
   onValueChanges(result){
     this.barcodeGuesses.push(result.codeResult.code);
-    console.log(result.codeResult.code);
     let barcodeOccurrences = new Map<string, number>();
     let confidentValue: string;
     this.barcodeGuesses.forEach((value) => {
         if (barcodeOccurrences.has(value)) {
           const cur = barcodeOccurrences.get(value) + 1;
           if (cur > 4) {
-            console.log("confident foudn");
             confidentValue = value;
             this.barcodeGuesses = [];
             this.ref.checked = false;
