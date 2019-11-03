@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-checkout-page',
@@ -15,7 +15,7 @@ export class CheckoutPageComponent implements OnInit {
         category: "Fruit"
     }
 };
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
   }
