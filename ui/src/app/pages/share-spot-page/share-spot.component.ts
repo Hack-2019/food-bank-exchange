@@ -54,13 +54,23 @@ export class ShareSpotComponent implements OnInit {
         let canReceive: CanReceive[] = [];
 
         entries.forEach((entry) => {
+          console.log(entry);
           entry.needs.forEach(need => {
-            if (need.username == curUser) {
-              usersNeeds.push({foodName: entry.foodName, quantity: need.quantity, userNeed: need});
-            } else {
-              let usersStock = stock.foods.find((food) => food.name == entry.foodName);
-              if (usersStock.quantity >= 0) {
-                canProvide.push({foodName: entry.foodName, neededQuantity: need.quantity, needyUsername: need.username, ownedQuantity: usersStock.quantity});
+            // @ts-ignore
+            if (need != "") {
+              console.log("test" + need + "523");
+              if (need.username == curUser) {
+                usersNeeds.push({foodName: entry.foodName, quantity: need.quantity, userNeed: need});
+              } else {
+                let usersStock = stock.foods.find((food) => food.name == entry.foodName);
+                if (usersStock.quantity >= 0) {
+                  canProvide.push({
+                    foodName: entry.foodName,
+                    neededQuantity: need.quantity,
+                    needyUsername: need.username,
+                    ownedQuantity: usersStock.quantity
+                  });
+                }
               }
             }
           });
@@ -70,6 +80,7 @@ export class ShareSpotComponent implements OnInit {
           let matchingNeed = usersNeeds.find(need => need.foodName);
           if (matchingNeed) {
             entry.providers.forEach(provider => {
+              console.log("ggds" + provider);
               if (provider.username != curUser) {
                 canReceive.push({foodName: entry.foodName, offeredQuantity: provider.quantity, providerUsername: provider.username, requiredQuantity: matchingNeed.userNeed.quantity});
               }
