@@ -52,7 +52,7 @@ router.get('/list', (((req: any, res: any, next: any) => {
         .limit(1000000000)
         .get()
         .then((result => {
-            const entries: Food[] = result.docs.map(d => <Food>{name: d.get("name"), tags: d.get("tags")});
+            const entries: Food[] = result.docs.map(d => <Food>{name: d.get("name"), tags: d.get("tags"), url: d.get('url')});
             res.status(200).send(entries);
             next();
         }));
