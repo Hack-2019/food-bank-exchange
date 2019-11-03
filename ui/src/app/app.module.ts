@@ -30,12 +30,9 @@ import { UpdateNeedPageComponent } from './update-need-page/update-need-page.com
     AddProductComponent,
     LoginPageComponent,
     RegisterPageComponent,
-<<<<<<< HEAD
     UpdateNeedPageComponent,
     UpdateNeedPageComponent,
-=======
     ShareSpotComponent,
->>>>>>> f05aa356401065ccac39e987074d83edb8206855
   ],
   imports: [
     BrowserModule,
