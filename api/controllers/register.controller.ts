@@ -11,7 +11,7 @@ router.post('', ((req: any, res: any, next: any) => {
     // Hopefully this will never fail
     const newStock: Stock = {
         foods: [],
-        username: req.user.username
+        username: req.body.username
     };
     firestore.collection("stock").add(newStock);
 
