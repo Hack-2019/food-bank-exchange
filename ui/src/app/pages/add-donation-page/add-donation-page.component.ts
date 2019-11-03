@@ -14,6 +14,7 @@ import {BarecodeScannerLivestreamComponent} from "ngx-barcode-scanner";
 })
 export class AddDonationPageComponent implements OnInit {
 
+  @ViewChild("foodNameInput", {static: true}) foodNameRef: any;
   @ViewChild("barcodeSlide", {static: true}) ref: any;
 
   barcodeEnabled: boolean = false;
@@ -62,12 +63,15 @@ export class AddDonationPageComponent implements OnInit {
   }
 
   onSubmit(names: any[], quantity: string) {
+      this.success = false;
+
       let quantityNum = parseInt(quantity);
       let request: Donation = {items: [
           {foodName: names[0].value, quantity: quantityNum}
         ]};
       this.http.post("http://" + environment.server + "/stock/donate", request, this.httpOptions).subscribe(r => {
       this.success = true
+        this.foodName = [];
     });
   }
 
@@ -98,7 +102,7 @@ export class AddDonationPageComponent implements OnInit {
       }
       this.http.post("http://" + environment.server + "/food/search/upc", search, this.httpOptions).subscribe((result: UpcSearchResult) => {
           if (result.productName != undefined) {
-            this.foodName = [result.productName];
+            this.foodName = [{display: result.productName, value: result.productName}];
           }
       });
     } else {
