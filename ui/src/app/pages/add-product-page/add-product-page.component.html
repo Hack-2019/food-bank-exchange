@@ -3,7 +3,7 @@
   <form #nameform="ngForm">
     <div class="form-group">
       <label for="name">Name: </label>
-      <input type="text" name="name" class="form-control" required minlength="1" [(ngModel)]="Donation"
+      <input #somethingElse type="text" name="name" class="form-control" required minlength="1" [(ngModel)]="Donation"
         #name="ngModel">
       <div style="color:red;" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
         <div *ngIf="name.errors.required">
@@ -15,7 +15,11 @@
       </div>
     </div>
 
-      <tag-input [ngModel]="[]" [ngModelOptions]="{standalone: true}">
+      <tag-input #somethingElse2 
+        [ngModel]="[]" 
+        [onlyFromAutocomplete]="false" 
+        [ngModelOptions]="{standalone: true}"
+        [separatorKeyCodes]=[9]>
         <tag-input-dropdown
           [showDropdownIfEmpty]="true"
           [autocompleteItems]="foodTags"
@@ -23,6 +27,6 @@
         </tag-input-dropdown>
       </tag-input>
 
-    <button type="submit" [disabled]="!nameform.form.valid" class="btn btn-success">Submit</button>
+    <button type="submit" [disabled]="!nameform.form.valid" (click) = "onSubmit(somethingElse.value,somethingElse2.items)" class="btn btn-success">Submit</button>
   </form>
 </div>
