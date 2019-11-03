@@ -1,6 +1,33 @@
-<h1>Checkout Items from a pantry</h1>
-
-<div class="container">
-    <label>{{contestForm.value.name}} {{contestForm.value.category}}</label>
-    <button class="btn btn-success">Checkout</button>
-</div>
+<form>
+        <div *ngIf="success" class="alert alert-success">
+          Purchase Successfull!
+        </div>
+        <div class="input-group">
+          <label for="foodNameInput">Food Name:</label>
+          <tag-input #foodNameInput name="foodNameInput" id="foodNameInput"
+                     [ngModel]="[]"
+                     [onlyFromAutocomplete]="false"
+                     [ngModelOptions]="{standalone: true}"
+                     [maxItems]="1"
+                     [secondaryPlaceholder]="placeholder"
+                     [separatorKeyCodes]=[9]>
+            <tag-input-dropdown
+              [showDropdownIfEmpty]="true"
+              [autocompleteItems]="foodNames"
+            >
+            </tag-input-dropdown>
+          </tag-input>
+          <div style="color:red;" *ngIf="invalidSubmissionAttempted" class="alert alert-danger">
+            Food name is required.
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="quantityInput">Quantity:</label>
+          <input #quantity name="quantityInput" id="quantityInput" type="text" class="form-control" [defaultValue]="0">
+        </div>
+      
+        <button type="submit" [disabled]="foodNameInput.items.length == 0" (click)="onSubmit(foodNameInput.items, quantity.value)"
+                class="btn btn-success">
+          Checkout
+        </button>
+      </form>
